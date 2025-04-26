@@ -1,13 +1,14 @@
 import crypto from 'crypto'
 
-export class User {
+export class Customer {
   public readonly id: string
-  public email: string
-  public password: string
-  public role: 'admin' | 'customer'
+  public readonly user_id?: string
+  public name: string
+  public phone: string
+  public address: string
 
   constructor(
-    props: Omit<User, 'id'>, 
+    props: Omit<Customer, 'id'>, 
     id?: string
   ) {
     Object.assign(this, props)
