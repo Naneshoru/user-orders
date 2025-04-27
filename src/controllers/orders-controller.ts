@@ -1,48 +1,27 @@
-import { OrdersRepository } from "../repositories/orders-repository";
-import { ProductsRepository } from "../repositories/products-repository";
-import { UsersRepository } from "../repositories/users-repository";
+import { CreateOrder } from "../use-cases/create-order"
+import { Request, Response } from "express"
+import { ListOrders } from "../use-cases/list-orders"
 
 export class OrdersController {
-  private ordersRepository: OrdersRepository;
-  private productsRepository: ProductsRepository;
-  private usersRepository: UsersRepository;
+  constructor(
+    private createOrder: CreateOrder, 
+    private listOrders: ListOrders 
+  ) {}
 
-  constructor(props) {
-    Object.assign(this, props);
+  async get(req: Request, res: Response) {
+    const orders = await this.listOrders.execute()
+    res.json(orders)
   }
 
-  async createOrder(userId: string, items: { product_id: string; quantity: number }[]) {
-    const user = await this.usersRepository.getUserById(userId);
+  async create(req: Request, res: Response) {
+    const { customer_id, items, status } = req.body
 
-    if (!user) {
-      throw new Error('Usuário não encontrado!');
+    if (!customer_id || !items || !status) {
+      return res.status(400).json({ error: 'Campos obrigatórios: (customer_id, items, status)' })
     }
 
-    const orderItems = await Promise.all(items.map(async (item) => {
-      const product = await this.productsRepository.getProductById(item.product_id);
+    const order = await this.createOrder.execute(customer_id, items, status)
 
-      if (!product) {
-        throw new Error(`Produto com id ${item.product_id} não encontrado!`);
-      }
-
-      if (item.quantity <= 0) {
-        throw new Error(`Quantidade inválida para o produto ${product.name}`);
-      }
-
-      return {
-        product_id: product.id,
-        quantity: item.quantity,
-        value: product.price,
-        subtotal: product.price * item.quantity,
-      };
-    }));
-
-    const order = await this.ordersRepository.addOrder(
-      user.id,
-      orderItems,
-      'pending',
-    );
-
-    return order;
+    res.status(201).json(order)
   }
 }
