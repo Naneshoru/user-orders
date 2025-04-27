@@ -14,17 +14,3 @@ app.use('/api', routes)
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`)
 })
-
-
-console.log(new UsersRepository().getAllUsers())
-
-console.log(new CustomersRepository().getAllCustomers())
-
-console.log(
-  JSON.stringify(
-    new OrdersRepository()
-  .getAllOrders(), null, 2
-  )
-)
-
-console.log(new ProductsRepository().getAllProducts())
