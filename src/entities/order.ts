@@ -18,9 +18,7 @@ export class Order {
     id?: string
   ) {
     Object.assign(this, props);
-
-    if (!id) {
-      this.id = crypto.randomUUID();
-    }
+    
+    this.id = id || crypto.randomUUID();
   }
 }
