@@ -5,8 +5,8 @@ export class UsersRepository {
 
   constructor() {
     this.users = [
-      new User({ password: 'John Doe', email: 'jhon@doe.com', role: 'customer' }),
-      new User ({ password: 'Jane Smith', email: 'jane@smith.com', role: 'customer' }),
+      new User({ password: 'John Doe', email: 'jhon@doe.com', role: 'customer' }, '1'),
+      new User ({ password: 'Jane Smith', email: 'jane@smith.com', role: 'customer' }, '2'),
     ];
   }
 
@@ -18,7 +18,7 @@ export class UsersRepository {
     return this.users.find(user => user.id === id);
   }
 
-  addUser(email: string, password: string, role: 'admin' | 'customer') {
+  addUser(email: string, password: string, role: 'admin' | 'customer' ) {
     const newUser = { id: (this.users.length + 1).toString(), email, password, role };
     this.users.push(newUser);
     return newUser;
