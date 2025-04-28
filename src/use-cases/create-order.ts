@@ -1,3 +1,4 @@
+import { CreateOrderDTO } from "../dtos/create-order";
 import { OrdersRepository } from "../repositories/orders-repository";
 import { UsersRepository } from "../repositories/users-repository";
 
@@ -7,7 +8,9 @@ export class CreateOrder {
     private usersRepository: UsersRepository,
   ) {}
 
-  execute (customer_id: string, items: { product_id: string; quantity: number; value: number; subtotal: number; }[], status: 'completed' | 'pending' | 'cancelled') {
+  execute (dto: CreateOrderDTO) {
+    const { customer_id, items, status } = dto
+
     const customer = this.usersRepository.getUserById(customer_id)
 
     if (!customer) {

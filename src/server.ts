@@ -1,7 +1,3 @@
-import { CustomersRepository } from "./repositories/customers-repository.ts";
-import { UsersRepository } from "./repositories/users-repository.ts";
-import { OrdersRepository } from "./repositories/orders-repository.ts";
-import { ProductsRepository } from "./repositories/products-repository.ts";
 import express from "express";
 import routes from "./routes/index";
 

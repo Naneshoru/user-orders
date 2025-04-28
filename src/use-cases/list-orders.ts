@@ -1,13 +1,12 @@
-import { OrdersRepository } from "../repositories/orders-repository"
+import { ListOrderDTO } from '../dtos/list-orders';
+import { OrdersRepository } from '../repositories/orders-repository';
 
 export class ListOrders {
-  constructor(
-    private ordersRepository: OrdersRepository,
-  ) {}
+  constructor(private ordersRepository: OrdersRepository) {}
 
   async execute() {
-    const orders = await this.ordersRepository.getAllOrders()
+    const orders: ListOrderDTO[] = this.ordersRepository.getAllOrders();
 
-    return orders
+    return orders;
   }
 }
