@@ -1,4 +1,4 @@
-import { ListOrderDTO } from '../dtos/list-orders';
+import { ListOrderDTO } from '../dtos/list-orders-dto';
 import { OrdersRepository } from '../repositories/orders-repository';
 
 export class ListOrders {

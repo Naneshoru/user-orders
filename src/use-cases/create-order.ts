@@ -1,24 +1,24 @@
-import { CreateOrderDTO } from "../dtos/create-order";
-import { OrdersRepository } from "../repositories/orders-repository";
-import { UsersRepository } from "../repositories/users-repository";
+import { CreateOrderDTO } from '../dtos/create-order-dto';
+import { OrdersRepository } from '../repositories/orders-repository';
+import { UsersRepository } from '../repositories/users-repository';
 
 export class CreateOrder {
   constructor(
     private ordersRepository: OrdersRepository,
-    private usersRepository: UsersRepository,
+    private usersRepository: UsersRepository
   ) {}
 
-  execute (dto: CreateOrderDTO) {
-    const { customer_id, items, status } = dto
+  execute(dto: CreateOrderDTO) {
+    const { customer_id, items, status } = dto;
 
-    const customer = this.usersRepository.getUserById(customer_id)
+    const customer = this.usersRepository.getUserById(customer_id);
 
     if (!customer) {
-      throw new Error('Cliente não encontrado!')
+      throw new Error('Cliente não encontrado!');
     }
 
-    const order = this.ordersRepository.addOrder(customer_id, items, status)
+    const order = this.ordersRepository.addOrder(customer_id, items, status);
 
-    return `Pedido criado com sucesso! ID: ${order.id}`
+    return `Pedido criado com sucesso! ID: ${order.id}`;
   }
 }
