@@ -1,4 +1,3 @@
-import { User } from "../entities/user"
 import { UsersRepository } from "../repositories/users-repository"
 import { Request, Response } from "express"
 

@@ -1,13 +1,17 @@
+import { ModifyOrderStatusDTO } from './../dtos/modify-order-status-dto';
 import { Request, Response } from 'express';
-import { CreateOrder } from '../use-cases/create-order';
-import { ListOrders } from '../use-cases/list-orders';
-import { CreateOrderDTO } from '../dtos/create-order-dto';
-import { ModifyOrderItems } from '../use-cases/modify-order-items';
-import { ModifyOrderStatus } from '../use-cases/modify-order-status';
-import { ModifyOrderItemsDTO } from '../dtos/modify-order-items-dto';
-import { ModifyOrderStatusDTO } from '../dtos/modify-order-status-dto';
-import { FindOrder } from '../use-cases/find-order';
-import { CancelOrder } from '../use-cases/cancel-order';
+import {
+  CreateOrder,
+  ListOrders,
+  ModifyOrderItems,
+  ModifyOrderStatus,
+  FindOrder,
+  CancelOrder,
+} from '../use-cases';
+import { 
+  CreateOrderDTO,
+  ModifyOrderItemsDTO
+} from '../dtos';
 
 export class OrdersController {
   constructor(
