@@ -1,26 +1,43 @@
 import { OrdersController } from './../controllers/orders-controller';
-import { Router } from "express"
+import { Router } from 'express';
 import { CreateOrder } from '../use-cases/create-order';
 import { ListOrders } from '../use-cases/list-orders';
 import { OrdersRepository } from '../repositories/orders-repository';
 import { UsersRepository } from '../repositories/users-repository';
+import { ModifyOrderItems } from '../use-cases/modify-order-items';
+import { ModifyOrderStatus } from '../use-cases/modify-order-status';
 
-const ordersRoutes = Router()
+const ordersRoutes = Router();
 
 const ordersRepository = new OrdersRepository();
 const usersRepository = new UsersRepository();
 
-const createOrder = new CreateOrder(ordersRepository, usersRepository)
-const listOrders = new ListOrders(ordersRepository)
+const createOrder = new CreateOrder(ordersRepository, usersRepository);
+const listOrders = new ListOrders(ordersRepository);
+const modifyOrderItems = new ModifyOrderItems(ordersRepository);
+const modifyOrderStatus = new ModifyOrderStatus(ordersRepository);
 
-const ordersController = new OrdersController(createOrder, listOrders)
+const ordersController = new OrdersController(
+  createOrder,
+  listOrders,
+  modifyOrderItems,
+  modifyOrderStatus
+);
 
 ordersRoutes.get('/', (req, res) => {
-  ordersController.get(req, res)
-})
+  ordersController.get(req, res);
+});
 
 ordersRoutes.post('/', (req, res) => {
-  ordersController.create(req, res)
-})
+  ordersController.create(req, res);
+});
 
-export default ordersRoutes
+ordersRoutes.put('/modify-items/:id', (req, res) => {
+  ordersController.modifyItems(req, res);
+});
+
+ordersRoutes.put('/modify-status/:id', (req, res) => {
+  ordersController.modifyStatus(req, res);
+});
+
+export default ordersRoutes;
