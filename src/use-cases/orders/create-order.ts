@@ -1,6 +1,6 @@
-import { CreateOrderDTO } from '../dtos/create-order-dto';
-import { OrdersRepository } from '../repositories/orders-repository';
-import { UsersRepository } from '../repositories/users-repository';
+import { CreateOrderDTO } from '../../dtos/create-order-dto';
+import { OrdersRepository } from '../../repositories/orders-repository';
+import { UsersRepository } from '../../repositories/users-repository';
 
 export class CreateOrder {
   constructor(

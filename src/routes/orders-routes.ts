@@ -1,13 +1,13 @@
 import { OrdersController } from './../controllers/orders-controller';
 import { Router } from 'express';
-import { CreateOrder } from '../use-cases/create-order';
-import { ListOrders } from '../use-cases/list-orders';
+import { CreateOrder } from '../use-cases/orders/create-order';
+import { ListOrders } from '../use-cases/orders/list-orders';
 import { OrdersRepository } from '../repositories/orders-repository';
 import { UsersRepository } from '../repositories/users-repository';
-import { ModifyOrderItems } from '../use-cases/modify-order-items';
-import { ModifyOrderStatus } from '../use-cases/modify-order-status';
-import { FindOrder } from '../use-cases/find-order';
-import { CancelOrder } from '../use-cases/cancel-order';
+import { ModifyOrderItems } from '../use-cases/orders/modify-order-items';
+import { ModifyOrderStatus } from '../use-cases/orders/modify-order-status';
+import { FindOrder } from '../use-cases/orders/find-order';
+import { CancelOrder } from '../use-cases/orders/cancel-order';
 
 const ordersRoutes = Router();
 
@@ -19,7 +19,7 @@ const listOrders = new ListOrders(ordersRepository);
 const modifyOrderItems = new ModifyOrderItems(ordersRepository);
 const modifyOrderStatus = new ModifyOrderStatus(ordersRepository);
 const findOrder = new FindOrder(ordersRepository);
-const cancelOrder = new CancelOrder(ordersRepository)
+const cancelOrder = new CancelOrder(ordersRepository);
 
 const ordersController = new OrdersController(
   createOrder,

@@ -1,5 +1,5 @@
-import { ListOrderDTO } from '../dtos/list-orders-dto';
-import { OrdersRepository } from '../repositories/orders-repository';
+import { ListOrderDTO } from '../../dtos/list-orders-dto';
+import { OrdersRepository } from '../../repositories/orders-repository';
 
 export class ListOrders {
   constructor(private ordersRepository: OrdersRepository) {}

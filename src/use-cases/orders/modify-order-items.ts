@@ -1,10 +1,8 @@
-import { ModifyOrderItemsDTO } from '../dtos/modify-order-items-dto';
-import { OrdersRepository } from '../repositories/orders-repository';
+import { ModifyOrderItemsDTO } from '../../dtos/modify-order-items-dto';
+import { OrdersRepository } from '../../repositories/orders-repository';
 
 export class ModifyOrderItems {
-  constructor(
-    private ordersRepository: OrdersRepository,
-  ) {}
+  constructor(private ordersRepository: OrdersRepository) {}
 
   execute(dto: ModifyOrderItemsDTO) {
     const { id, items } = dto;
