@@ -6,6 +6,7 @@ import { OrdersRepository } from '../repositories/orders-repository';
 import { UsersRepository } from '../repositories/users-repository';
 import { ModifyOrderItems } from '../use-cases/modify-order-items';
 import { ModifyOrderStatus } from '../use-cases/modify-order-status';
+import { FindOrder } from '../use-cases/find-order';
 
 const ordersRoutes = Router();
 
@@ -16,16 +17,22 @@ const createOrder = new CreateOrder(ordersRepository, usersRepository);
 const listOrders = new ListOrders(ordersRepository);
 const modifyOrderItems = new ModifyOrderItems(ordersRepository);
 const modifyOrderStatus = new ModifyOrderStatus(ordersRepository);
+const findOrder = new FindOrder(ordersRepository);
 
 const ordersController = new OrdersController(
   createOrder,
   listOrders,
   modifyOrderItems,
-  modifyOrderStatus
+  modifyOrderStatus,
+  findOrder,
 );
 
 ordersRoutes.get('/', (req, res) => {
   ordersController.get(req, res);
+});
+
+ordersRoutes.get('/:id', (req, res) => {
+  ordersController.find(req, res);
 });
 
 ordersRoutes.post('/', (req, res) => {

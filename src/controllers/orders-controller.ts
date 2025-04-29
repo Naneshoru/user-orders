@@ -6,18 +6,31 @@ import { ModifyOrderItems } from '../use-cases/modify-order-items';
 import { ModifyOrderStatus } from '../use-cases/modify-order-status';
 import { ModifyOrderItemsDTO } from '../dtos/modify-order-items-dto';
 import { ModifyOrderStatusDTO } from '../dtos/modify-order-status-dto';
+import { FindOrder } from '../use-cases/find-order';
 
 export class OrdersController {
   constructor(
     private createOrder: CreateOrder,
     private listOrders: ListOrders,
     private modifyOrderItems: ModifyOrderItems,
-    private modifyOrderStatus: ModifyOrderStatus
+    private modifyOrderStatus: ModifyOrderStatus,
+    private findOrder: FindOrder,
   ) {}
 
   async get(req: Request, res: Response) {
     const orders = await this.listOrders.execute();
     res.json(orders);
+  }
+
+  async find(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ error: 'ID não informado' });
+    }
+
+    const order = await this.findOrder.execute(id);
+    
+    res.json(order);
   }
 
   async create(req: Request, res: Response) {
@@ -66,7 +79,7 @@ export class OrdersController {
     const { id } = req.params;
 
     const validStatuses = ['completed', 'pending', 'cancelled'];
-    
+
     if (!id && !status) {
       return res.status(400).json({
         error:
