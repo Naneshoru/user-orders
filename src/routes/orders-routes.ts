@@ -7,6 +7,7 @@ import { UsersRepository } from '../repositories/users-repository';
 import { ModifyOrderItems } from '../use-cases/modify-order-items';
 import { ModifyOrderStatus } from '../use-cases/modify-order-status';
 import { FindOrder } from '../use-cases/find-order';
+import { CancelOrder } from '../use-cases/cancel-order';
 
 const ordersRoutes = Router();
 
@@ -18,6 +19,7 @@ const listOrders = new ListOrders(ordersRepository);
 const modifyOrderItems = new ModifyOrderItems(ordersRepository);
 const modifyOrderStatus = new ModifyOrderStatus(ordersRepository);
 const findOrder = new FindOrder(ordersRepository);
+const cancelOrder = new CancelOrder(ordersRepository)
 
 const ordersController = new OrdersController(
   createOrder,
@@ -25,6 +27,7 @@ const ordersController = new OrdersController(
   modifyOrderItems,
   modifyOrderStatus,
   findOrder,
+  cancelOrder
 );
 
 ordersRoutes.get('/', (req, res) => {
@@ -45,6 +48,10 @@ ordersRoutes.put('/modify-items/:id', (req, res) => {
 
 ordersRoutes.put('/modify-status/:id', (req, res) => {
   ordersController.modifyStatus(req, res);
+});
+
+ordersRoutes.delete('/:id', (req, res) => {
+  ordersController.cancel(req, res);
 });
 
 export default ordersRoutes;

@@ -7,6 +7,7 @@ import { ModifyOrderStatus } from '../use-cases/modify-order-status';
 import { ModifyOrderItemsDTO } from '../dtos/modify-order-items-dto';
 import { ModifyOrderStatusDTO } from '../dtos/modify-order-status-dto';
 import { FindOrder } from '../use-cases/find-order';
+import { CancelOrder } from '../use-cases/cancel-order';
 
 export class OrdersController {
   constructor(
@@ -15,6 +16,7 @@ export class OrdersController {
     private modifyOrderItems: ModifyOrderItems,
     private modifyOrderStatus: ModifyOrderStatus,
     private findOrder: FindOrder,
+    private cancelOrder: CancelOrder
   ) {}
 
   async get(req: Request, res: Response) {
@@ -28,9 +30,17 @@ export class OrdersController {
       return res.status(400).json({ error: 'ID não informado' });
     }
 
-    const order = await this.findOrder.execute(id);
-    
-    res.json(order);
+    try {
+      const order = await this.findOrder.execute(id);    
+      
+      if (order) {
+        res.json(order);
+      } else {
+        res.status(404).json({ error: 'Pedido não encontrado' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 
   async create(req: Request, res: Response) {
@@ -98,6 +108,21 @@ export class OrdersController {
     try {
       const order = this.modifyOrderStatus.execute(dto);
       res.json(order);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async cancel(req: Request, res: Response) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID não informado' });
+    }
+
+    try {
+      this.cancelOrder.execute(id);
+      res.send('Pedido cancelado com sucesso!');
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

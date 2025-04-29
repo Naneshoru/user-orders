@@ -121,4 +121,14 @@ export class OrdersRepository {
     
     return updatedOrder;
   }
+
+  cancelOrder(id: string) {
+    const orderIndex = this.orders.findIndex((order) => order.id === id);
+
+    if (orderIndex === -1) {
+      throw new Error('Pedido não encontrado!');
+    }
+
+    this.orders.splice(orderIndex, 1);
+  }
 }
