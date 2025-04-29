@@ -48,7 +48,7 @@ export class OrdersRepository {
 
   addOrder(
     customer_id: string,
-    items: { 
+    items: {
       product_id: string; 
       quantity: number,
       value: number,
@@ -66,5 +66,59 @@ export class OrdersRepository {
     };
     this.orders.push(newOrder);
     return newOrder;
+  }
+
+  modifyOrderItems(
+    id: string,
+    items: {
+      product_id: string; 
+      quantity: number,
+      value: number,
+      subtotal: number,
+    }[]
+  ) {
+    const order = this.orders.find((order) => order.id === id);
+
+    if (!order) {
+      throw new Error('Pedido não encontrado!');
+    }
+
+    const updatedOrder: Order = {
+      ...order,
+      items: items.map((item) => {
+        const existingItem = order.items.find((i) => i.product_id === item.product_id);
+        if (existingItem) {
+          return {
+            ...existingItem,
+            quantity: item.quantity,
+            value: item.value,
+            subtotal: item.subtotal
+          };
+        }
+        return item;
+      }),
+      total: items.reduce((acc, item) => acc + item.quantity * item.value, 0)
+    }
+
+    this.orders = this.orders.map((o) => (o.id === id ? updatedOrder : o));
+
+    return updatedOrder
+  }
+  
+  modifyOrderStatus(id: string, status: 'completed' | 'pending' | 'cancelled') {
+    const order = this.orders.find((order) => order.id === id);
+
+    if (!order) {
+      throw new Error('Pedido não encontrado!');
+    }
+
+    const updatedOrder: Order = {
+      ...order,
+      status,
+    };
+
+    this.orders = this.orders.map((o) => (o.id === id ? updatedOrder : o));
+    
+    return updatedOrder;
   }
 }
