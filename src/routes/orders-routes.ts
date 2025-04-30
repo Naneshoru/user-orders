@@ -1,13 +1,17 @@
 import { OrdersController } from './../controllers/orders-controller';
 import { Router } from 'express';
-import { CreateOrder } from '../use-cases/orders/create-order';
-import { ListOrders } from '../use-cases/orders/list-orders';
-import { OrdersRepository } from '../repositories/orders-repository';
-import { UsersRepository } from '../repositories/users-repository';
-import { ModifyOrderItems } from '../use-cases/orders/modify-order-items';
-import { ModifyOrderStatus } from '../use-cases/orders/modify-order-status';
-import { FindOrder } from '../use-cases/orders/find-order';
-import { CancelOrder } from '../use-cases/orders/cancel-order';
+import { 
+  CreateOrder,
+  ListOrders,
+  ModifyOrderItems,
+  ModifyOrderStatus,
+  FindOrder,
+  CancelOrder
+} from '../use-cases/orders';
+import { 
+  OrdersRepository,
+  UsersRepository
+} from '../repositories';
 
 const ordersRoutes = Router();
 
