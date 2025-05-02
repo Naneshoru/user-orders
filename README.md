@@ -22,5 +22,4 @@ Este projeto é um exemplo prático de backend utilizando **Clean Architecture**
 - [X] Cadastro de pedidos com associação ao usuário
 - [ ] Envio de e-mail de confirmação do pedido
 - [ ] Histórico de pedidos por usuário
-- [ ] Sistema de autenticação e autorização (futuro)
 - [ ] Testes unitários e integração (em progresso)
